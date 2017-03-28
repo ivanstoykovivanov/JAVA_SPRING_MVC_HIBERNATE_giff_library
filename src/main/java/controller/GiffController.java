@@ -8,12 +8,17 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import model.Gif;
+import service.CategoryService;
+import service.GifService;
+import web.FlashMessage;
+
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class GifController {
+public class GiffController {
     @Autowired
     private GifService gifService;
 
@@ -52,7 +57,7 @@ public class GifController {
     @RequestMapping("/favorites")
     public String favorites(Model model) {
         // TODO: Get list of all GIFs marked as favorite
-        List<Gif> faves = new ArrayList<>();
+        List<Gif> faves = new ArrayList<Gif>();
 
         model.addAttribute("gifs",faves);
         model.addAttribute("username","Chris Ramacciotti"); // Static username
@@ -142,7 +147,7 @@ public class GifController {
     @RequestMapping("/search")
     public String searchResults(@RequestParam String q, Model model) {
         // TODO: Get list of GIFs whose description contains value specified by q
-        List<Gif> gifs = new ArrayList<>();
+        List<Gif> gifs = new ArrayList<Gif>();
 
         model.addAttribute("gifs",gifs);
         return "gif/index";

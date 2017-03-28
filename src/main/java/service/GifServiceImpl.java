@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import dao.GifDao;
+import model.Gif;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -12,17 +15,14 @@ public class GifServiceImpl implements GifService {
     @Autowired
     private GifDao gifDao;
 
-    @Override
     public List<Gif> findAll() {
         return gifDao.findAll();
     }
 
-    @Override
     public Gif findById(Long id) {
         return gifDao.findById(id);
     }
 
-    @Override
     public void save(Gif gif, MultipartFile file) {
         try {
             gif.setBytes(file.getBytes());
@@ -32,12 +32,10 @@ public class GifServiceImpl implements GifService {
         }
     }
 
-    @Override
     public void delete(Gif gif) {
         gifDao.delete(gif);
     }
 
-    @Override
     public void toggleFavorite(Gif gif) {
         gif.setFavorite(!gif.isFavorite());
         gifDao.save(gif);

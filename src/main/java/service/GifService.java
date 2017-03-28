@@ -1,6 +1,8 @@
 package service;
 import org.springframework.web.multipart.MultipartFile;
 
+import model.Gif;
+
 import java.util.List;
 
 public interface GifService {

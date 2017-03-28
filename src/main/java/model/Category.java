@@ -22,7 +22,7 @@ public class Category {
     private String colorCode;
 
     @OneToMany(mappedBy = "category")
-    private List<Gif> gifs = new ArrayList<>();
+    private List<Gif> gifs = new ArrayList<Gif>();
 
     public Category(){}
 
@@ -53,5 +53,4 @@ public class Category {
     public List<Gif> getGifs() {
         return gifs;
     }
-
 }

@@ -2,6 +2,11 @@ package dao;
 
 import java.util.List;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,29 +18,39 @@ public class CategoryDaoImpl implements CategoryDao {
 	private SessionFactory sessionFactory ; 
 	
 	public List<Category> findAll() {
-		//Open session 
 		Session session = sessionFactory.openSession() ; 
 		
 		CriteriaBuilder builder = session.getCriteriaBuilder() ; 
+		CriteriaQuery<Category> criteria = builder.createQuery(Category.class) ; 
+		criteria.from(Category.class) ; 
+		List<Category> categories = session.createQuery(criteria).getResultList() ;  
+		session.close() ; 
 		
-		List<Category> categories = session.createCriteria(Category.class).list() ; 
-		
-		return null;
+		return categories ;
 	}
 
 	public Category findById(Long id) {
-		// TODO Auto-generated method stub
+		Session session = sessionFactory.openSession() ; 
+		Category category = session.get(Category.class, id);
+        Hibernate.initialize(category.getGifs());
+        session.close();
+		
 		return null;
 	}
 
 	public void save(Category category) {
-		// TODO Auto-generated method stub
-		
+		Session session = sessionFactory.openSession() ; 
+		session.beginTransaction() ; 
+		session.saveOrUpdate(category);
+		session.getTransaction().commit();
+		session.close(); 
 	}
 
 	public void delete(Category category) {
-		// TODO Auto-generated method stub
-		
+		Session session = sessionFactory.openSession() ; 
+		session.beginTransaction() ; 
+		session.delete(category);
+		session.getTransaction().commit() ; 
+		session.close();
 	}
-
 }
